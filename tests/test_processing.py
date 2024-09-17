@@ -32,7 +32,7 @@ from src.processing import filter_by_state, sort_by_date
     ],
 )
 def test_filter_by_state(list_dictionaries: list[dict[str, Any]], state: str, expected: list[dict[str, Any]]) -> Any:
-    assert filter_by_state(list_dictionaries, state) == expected
+    return filter_by_state(list_dictionaries, state) == expected
 
 
 @pytest.mark.parametrize(
@@ -61,5 +61,12 @@ def test_filter_by_state(list_dictionaries: list[dict[str, Any]], state: str, ex
         ),
     ],
 )
-def test_sort_by_date(date_dictionaries: list[dict[str, Any]], sorted_date: bool, expected: list[dict[str, Any]]) -> Any:
-    assert sort_by_date(date_dictionaries, sorted_date) == expected
+def test_sort_by_date(
+    date_dictionaries: list[dict[str, Any]], sorted_date: bool, expected: list[dict[str, Any]]
+) -> Any:
+    return sort_by_date(date_dictionaries, sorted_date) == expected
+
+
+if __name__ == "__main__":
+    assert test_filter_by_state("list_dictionaries", "state", "expected")
+    assert test_sort_by_date("date_dictionaries", "sorted_date", "expected")

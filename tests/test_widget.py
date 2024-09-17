@@ -33,6 +33,6 @@ def test_get_date(user_time: str, repair_time: str) -> str:
     return get_date(user_time) == repair_time
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     assert test_mask_account_card("card_account_info", "masks")
     assert test_get_date("user_time", "repair_time")
