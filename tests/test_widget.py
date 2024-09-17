@@ -16,10 +16,23 @@ from src.widget import get_date, mask_account_card
         ("Счет 73654108430135874305", "Счет **4305"),
     ],
 )
-def test_mask_account_card(card_account_info, masks):
-    assert mask_account_card(card_account_info) == masks
+def test_mask_account_card(card_account_info: str, masks: str) -> str:
+    return mask_account_card(card_account_info) == masks
 
 
-@pytest.mark.parametrize("user_time, repair_time", [("2018-07-11T02:26:18.671407", "11.07.2018")])
-def test_get_date(user_time, repair_time):
-    assert get_date(user_time) == repair_time
+@pytest.mark.parametrize(
+    "user_time, repair_time",
+    [
+        ("2018-07-11T02:26:18.671407", "11.07.2018"),
+        ("2019-07-03T18:35:29.512364", "03.07.2019"),
+        ("2018-06-30T02:08:58.425572", "30.06.2018"),
+        ("2018-10-14T08:21:33.419441", "14.10.2018"),
+    ],
+)
+def test_get_date(user_time: str, repair_time: str) -> str:
+    return get_date(user_time) == repair_time
+
+
+if __name__=="__main__":
+    assert test_mask_account_card("card_account_info", "masks")
+    assert test_get_date("user_time", "repair_time")
