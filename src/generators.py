@@ -1,6 +1,6 @@
-from typing import Any
+from typing import Any, Iterator
 
-transactions = [
+transactions_info = [
     {
         "id": 939719570,
         "state": "EXECUTED",
@@ -49,43 +49,48 @@ transactions = [
 ]
 
 
-def filter_by_currency(transactions: Any, currency: str) -> Any:
+def filter_by_currency(transactions_info: list[dict], currency_info: str) -> Iterator[Any]:
     """Функция принимает список словарей, представляющих транзакции.
     а возвращает итератор, который поочередно выдает транзакции,
     где валюта операции соответствует заданной"""
-    if len(transactions) > 0:
-        filtered_transactions = filter(
-            lambda transactions_list: transactions_list.get("operationAmount").get("currency").get("code") == currency,
-            transactions,
-        )
-        return filtered_transactions
+    if len(transactions_info) > 0:
+        for transaction in transactions_info:
+            if transaction.get("operationAmount").get("currency").get("code") == currency_info:
+                yield transaction
     else:
-        return "Список пустой"
+        yield "Введен пустой список"
 
 
-filter_by_currency(transactions, "currency")
+usd_transactions = filter_by_currency(transactions_info, "USD")
+for _ in range(2):
+    print(next(usd_transactions))
 
 
-def transaction_descriptions(transactions: Any, description: str) -> Any:
+def transaction_descriptions(transactions_info: list[dict], list_description: str) -> Iterator[Any]:
     """Генератор, который принимает список словарей с транзакциями и
     возвращает описание каждой операции по очереди"""
-    if len(transactions) > 0:
-        check_descriptions = filter(
-            lambda transactions_list: transactions_list.get("description") == description, transactions
-        )
-        return check_descriptions
+    if len(transactions_info) > 0:
+        for descriptions in range(len(transactions_info)):
+            if transactions_info[descriptions]["description"] == list_description:
+                yield transactions_info
     else:
-        return "Перевод не был произведен"
+        yield "Перевод не был осуществлен"
 
 
-transaction_descriptions(transactions, "description")
+for descriptions in range(len(transactions_info)):
+    print(transactions_info[descriptions]["description"])
 
 
-def card_number_generator() -> Any:
+
+def card_number_generator(number):
     """Генератор, который выдает номера банковских карт в формате
     XXXX XXXX XXXX XXXX, где X — цифра номера карты"""
-    card_number = map(lambda numb_input: )
-        return card_number
+    card_number = str(number)
+    while len(card_number) < 16:
+        card_number = "0" + card_number
+        formatted_card_number = f"{card_number[:4]} {card_number[4:8]} {card_number[-8:-4]} {card_number[-4:]}"
+    yield formatted_card_number
 
 
-card_number_generator()
+for card_number in card_number_generator(1):
+    print(card_number)
