@@ -1,0 +1,15 @@
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
+from typing import Any
+
+def test_filter_by_currency_exceptions(generators_input: Any) -> Any:
+    assert filter_by_currency(generators_input, "RUB")
+    assert filter_by_currency("Введен пустой список", "")
+
+
+def test_transaction_descriptions(generators_input: Any) -> Any:
+    assert transaction_descriptions(generators_input, "Перевод со счета на счет")
+    assert transaction_descriptions(generators_input, "Перевед не был осуществлен")
+
+
+def test_card_number_generator() -> Any:
+    assert card_number_generator(1, 5)
