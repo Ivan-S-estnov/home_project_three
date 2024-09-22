@@ -53,12 +53,11 @@ def filter_by_currency(transactions_info: list[dict], currency_info: str) -> Ite
     """Функция принимает список словарей, представляющих транзакции.
     а возвращает итератор, который поочередно выдает транзакции,
     где валюта операции соответствует заданной"""
-    if len(transactions_info) > 0:
-        for transaction in transactions_info:
-            if transaction.get("operationAmount").get("currency").get("code") == currency_info:
-                yield transaction
-    else:
-        yield "Введен пустой список"
+    for transaction in transactions_info:
+        if transaction["operationAmount"]["currency"]["code"] == currency_info:
+            yield transaction
+        elif transactions_info == [] :
+            yield "Введен пустой список"
 
 
 usd_transactions = filter_by_currency(transactions_info, "USD")
@@ -66,23 +65,23 @@ for _ in range(2):
     print(next(usd_transactions))
 
 
-def transaction_descriptions(transactions_info: list[dict], list_description: str) -> Iterator[Any]:
+def transaction_descriptions(transactions_info: list[dict], descriptions: str) -> Iterator[Any]:
     """Генератор, который принимает список словарей с транзакциями и
     возвращает описание каждой операции по очереди"""
-    if len(transactions_info) > 0:
-        for descriptions in range(len(transactions_info)):
-            if transactions_info[descriptions]["description"] == list_description:
-                yield transactions_info
-    else:
-        yield "Перевод не был осуществлен"
+  #  for descriptions in range(len(transactions_info)):
+   #     yield transactions_info[descriptions]["description"]
+    for d in transactions_info:
+        if d.get("description") == descriptions:
+            yield d
+        elif d.get("description") != descriptions:
+            yield "Перевед не был осуществлен"
 
 
 for descriptions in range(len(transactions_info)):
     print(transactions_info[descriptions]["description"])
 
 
-
-def card_number_generator(number):
+def card_number_generator(number: Any, card_number: Any) -> Iterator[Any]:
     """Генератор, который выдает номера банковских карт в формате
     XXXX XXXX XXXX XXXX, где X — цифра номера карты"""
     card_number = str(number)
@@ -92,5 +91,5 @@ def card_number_generator(number):
     yield formatted_card_number
 
 
-for card_number in card_number_generator(1):
+for card_number in card_number_generator(1, 5):
     print(card_number)
