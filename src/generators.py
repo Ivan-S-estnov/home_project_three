@@ -56,7 +56,7 @@ def filter_by_currency(transactions_info: list[dict], currency_info: str) -> Ite
     for transaction in transactions_info:
         if transaction["operationAmount"]["currency"]["code"] == currency_info:
             yield transaction
-        elif transactions_info == [] :
+        elif transactions_info == []:
             yield "Введен пустой список"
 
 
@@ -68,8 +68,8 @@ for _ in range(2):
 def transaction_descriptions(transactions_info: list[dict], descriptions: str) -> Iterator[Any]:
     """Генератор, который принимает список словарей с транзакциями и
     возвращает описание каждой операции по очереди"""
-  #  for descriptions in range(len(transactions_info)):
-   #     yield transactions_info[descriptions]["description"]
+    #  for descriptions in range(len(transactions_info)):
+    #     yield transactions_info[descriptions]["description"]
     for d in transactions_info:
         if d.get("description") == descriptions:
             yield d
@@ -81,15 +81,18 @@ for descriptions in range(len(transactions_info)):
     print(transactions_info[descriptions]["description"])
 
 
-def card_number_generator(number: Any, card_number: Any) -> Iterator[Any]:
+def card_number_generator(start: Any, end: Any) -> Iterator[Any]:
     """Генератор, который выдает номера банковских карт в формате
     XXXX XXXX XXXX XXXX, где X — цифра номера карты"""
-    card_number = str(number)
-    while len(card_number) < 16:
-        card_number = "0" + card_number
-        formatted_card_number = f"{card_number[:4]} {card_number[4:8]} {card_number[-8:-4]} {card_number[-4:]}"
-    yield formatted_card_number
+    while 0 <= start <= end:
+        start += 1
+
+        card_number = str(start)
+        while len(card_number) <= 16:
+            card_number = "0" + card_number
+            formatted_card_number = f"{card_number[:4]} {card_number[4:8]} {card_number[-8:-4]} {card_number[-4:]}"
+        yield formatted_card_number
 
 
-for card_number in card_number_generator(1, 5):
+for card_number in card_number_generator(9999999999999998, 9999999999999999):
     print(card_number)
