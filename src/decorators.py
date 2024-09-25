@@ -12,15 +12,15 @@ def log(filename: Any) -> Callable:
             try:
                 if filename:
                     result = func(*args, **kwargs)
+                    print("my_function ok")
                     with open(filename, "a", encoding="utf-8") as file:
-                        file.write("my_function ok")
-                        print("my_function ok")
+                        file.write("my_function ok\n")
 
             except Exception as e:
+                print(f"Ошибка: {e}")
+                raise e
                 with open(filename, "a", encoding="utf-8") as file:
                     file.write(f"my_function error: {e} Inputs: {args}, {kwargs}")
-                    print(Exception(f"Ошибка: {e}"))
-                raise Exception(f"Ошибка: {e}")
 
             return result
 
@@ -31,7 +31,7 @@ def log(filename: Any) -> Callable:
 
 @log(filename="mylog.txt")
 def my_function(x: Any, y: Any) -> Any:
-    return x + y
+    return x / y
 
 
-print(my_function(1, 5))
+print(my_function(6, 1))
