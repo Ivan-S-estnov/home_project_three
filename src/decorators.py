@@ -1,3 +1,4 @@
+from fileinput import filename
 from functools import wraps
 from typing import Any, Callable
 
@@ -10,17 +11,15 @@ def log(filename: Any) -> Callable:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
-                if filename:
-                    result = func(*args, **kwargs)
-                    print("my_function ok")
-                    with open(filename, "a", encoding="utf-8") as file:
-                        file.write("my_function ok\n")
-
+                result = func(*args, **kwargs)
+                print(f"{func.__name__} ok")
+                with open(filename, "a", encoding="utf-8") as file:
+                    file.write(f"{func.__name__} ok\n")
             except Exception as e:
                 print(f"Ошибка: {e}")
-                raise e
                 with open(filename, "a", encoding="utf-8") as file:
-                    file.write(f"my_function error: {e} Inputs: {args}, {kwargs}")
+                    file.write(f"{func.__name__} error: {e} Inputs: {args}, {kwargs}\n")
+                raise e
 
             return result
 
@@ -29,9 +28,9 @@ def log(filename: Any) -> Callable:
     return decorator
 
 
-@log(filename="mylog.txt")
+@log("mylog.txt")
 def my_function(x: Any, y: Any) -> Any:
     return x / y
 
 
-print(my_function(6, 1))
+print(my_function(2,5))
