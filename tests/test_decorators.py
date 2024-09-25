@@ -1,24 +1,31 @@
 import pytest
 
-from src.decorators import log, my_function
+from src.decorators import log
 
 
 def test_log_1():
-    @log(filename="mylog.txt")
-    def my_function(x, y):
-        return x + y
+    @log(filename="test_log.txt")
+    def test_func_1(x, y):
+        return x / y
 
-    result = my_function(1, 5)
-    assert result == 6
+    result = test_func_1(28, 7)
+    assert result == 4.0
 
 
 def test_log_2():
+    @log(filename="test_log.txt")
+    def test_func_2(a, b):
+        return a + b
+
     with pytest.raises(Exception):
-        my_function()
+        test_func_2(2, [])
 
 
 def test_log_3(capsys):
+    @log(filename="test_log.txt")
+    def test_func_3(f, v):
+        return f * v
 
-    my_function(1, 5)
+    result = test_func_3(4,2)
     captured = capsys.readouterr()
-    assert captured.out == "my_function ok\n"
+    assert captured.out == f"test_func_3 ok\n"
