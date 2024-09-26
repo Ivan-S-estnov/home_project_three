@@ -22,10 +22,10 @@ def test_log_2():
 
 
 def test_log_3(capsys):
-    @log(filename="test_log.txt")
+    @log()
     def test_func_3(f, v):
         return f * v
 
-    result = test_func_3(4,2)
+    result = test_func_3(4, 2)
     captured = capsys.readouterr()
     assert captured.out == f"test_func_3 ok\n"
