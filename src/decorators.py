@@ -1,9 +1,8 @@
-from fileinput import filename
 from functools import wraps
 from typing import Any, Callable
 
 
-def log(filename: Any) -> Callable:
+def log(filename: str = None) -> Callable:
     """Декоратор, который автоматически логирует начало и конец выполнения функции,
     а также ее результаты или возникшие ошибки."""
 
@@ -12,14 +11,18 @@ def log(filename: Any) -> Callable:
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
                 result = func(*args, **kwargs)
-                print(f"{func.__name__} ok")
-                with open(filename, "a", encoding="utf-8") as file:
-                    file.write(f"{func.__name__} ok\n")
+                if filename:
+                    with open(filename, "a", encoding="utf-8") as file:
+                        file.write(f"{func.__name__} ok\n")
+                else:
+                    print(f"{func.__name__} ok")
             except Exception as e:
-                print(f"Ошибка: {e}")
-                with open(filename, "a", encoding="utf-8") as file:
-                    file.write(f"{func.__name__} error: {e} Inputs: {args}, {kwargs}\n")
-                raise e
+                if filename:
+                    with open(filename, "a", encoding="utf-8") as file:
+                        file.write(f"{func.__name__} error: {e} Inputs: {args}, {kwargs}\n")
+                    raise e
+                else:
+                    print(f"Ошибка: {e}")
 
             return result
 
@@ -33,4 +36,4 @@ def my_function(x: Any, y: Any) -> Any:
     return x / y
 
 
-print(my_function(2,5))
+print(my_function(28, 7))
