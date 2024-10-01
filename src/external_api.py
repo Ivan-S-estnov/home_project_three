@@ -1,21 +1,22 @@
+import json
 import os
 
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv("../.env")
+API_KEY = json.loads(os.getenv("API_KEY"))
 
 
-def currency_conversion(transaction: dict) -> float:
-    """Функция, которая переводит остальную валюту в рубли"""
-    amount = transaction["operationAmount"]["amount"]
-    code = transaction["operationAmount"]["currency"]["code"]
-    if code == "RUB":
+def currency_conversion(transaction_data: dict) -> float:
+    """Функция, которая конвертирует остальную валюту в рубли"""
+    amount = transaction_data["operationAmount"]["amount"]
+    code = transaction_data["operationAmount"]["currency"]["code"]
+    if transaction_data["operationAmount"]["currency"]["code"] == "RUB":
         return amount
     else:
         url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from{code}&amount={amount}"
-        token_exchange = os.getenv("API_KEY_exchange")
-        headers = {"apikey": token_exchange}
-        response = requests.get(url, headers=headers)
-        result = dict(response.json())
-        return float(result["result"])
+        response = requests.get(url, headers=API_KEY)
+        result = response.json()
+        data = result.get("result")
+        return data
