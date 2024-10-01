@@ -1,7 +1,6 @@
 import json
 from typing import Any
 
-
 def get_json_file(file_opener: str) -> Any:
     """Функция принимает на вход путь до JSON-файла и возвращает
     список словарей с данными о финансовых транзакциях"""
