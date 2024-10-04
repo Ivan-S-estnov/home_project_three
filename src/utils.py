@@ -1,7 +1,6 @@
 import json
 from typing import Any
 
-
 json_way = r"C:\Users\Ivan\PycharmProjects\home_project_three\data\operations.json"
 
 

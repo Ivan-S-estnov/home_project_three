@@ -1,7 +1,5 @@
 from unittest.mock import patch
 
-from src.external_api import get_sum_amount, valuta_conversion
-
 
 @patch("src.external_api.valuta_conversion")
 def test_valuta_conversion(mock_convert):
