@@ -1,10 +1,11 @@
 import json
 from typing import Any
 
+
 json_way = r"C:\Users\Ivan\PycharmProjects\home_project_three\data\operations.json"
 
 
-def get_json_file(json_way) -> Any:
+def get_json_file(json_way: str) -> Any:
     """Функция принимает на вход путь до JSON-файла и возвращает
     список словарей с данными о финансовых транзакциях"""
     try:
