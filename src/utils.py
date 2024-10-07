@@ -1,21 +1,28 @@
 import json
-from typing import Any
+from pathlib import Path
+from typing import Optional
 
-json_way = r"C:\Users\Ivan\PycharmProjects\home_project_three\data\operations.json"
+BASE_DIR = Path(__file__).resolve().parent.parent
+join_path = BASE_DIR / "data" / "operations.json"
 
 
-def get_json_file(json_way: str) -> Any:
+def get_json_file(file_path: Path) -> Optional[list]:
     """Функция принимает на вход путь до JSON-файла и возвращает
     список словарей с данными о финансовых транзакциях"""
+
     try:
-        with open(json_way, encoding="utf-8") as json_file:
-            transaction_list = json.load(json_file)
-    except json.JSONDecodeError as j:
-        print(j)
-    except FileNotFoundError as e:
-        print(e)
+        with open(file_path, "r", encoding="utf-8") as json_file:
+            try:
+                transaction_list = json.load(json_file)
+                if isinstance(transaction_list, list):
+                    return transaction_list
+                else:
+                    return []
+            except json.JSONDecodeError:
+                return []
 
-    return transaction_list
+    except FileNotFoundError:
+        return []
 
 
-print(get_json_file(json_way))
+print(get_json_file(file_path=BASE_DIR / "data" / "operations.json"))

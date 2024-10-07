@@ -78,7 +78,7 @@ def generators_input():
 
 
 @pytest.fixture
-def utils_input():
+def utils_result():
     return [
         {
             "id": 441945886,
