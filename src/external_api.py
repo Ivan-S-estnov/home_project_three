@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator, SupportsFloat
 
 import requests
 from dotenv import load_dotenv
@@ -42,14 +42,19 @@ convert_result = valuta_conversion(
 print(convert_result)
 
 
-def get_sum_amount():
+def get_sum_amount() -> Iterator[Any]:
     """Функция принимает на вход транзакцию и возвращает сумму транзакции в рублях"""
     for i in payment:
         if len(i) > 0:
-            if i["operationAmount"]["currency"]["code"] == "RUB":
-                return i["operationAmount"]["amount"]
+
+            if i["operationAmount"]["currency"]["code"] != "RUB":
+                amount_valuta = i["operationAmount"]["amount"] * convert_result
+                return amount_valuta
             else:
-                return i["operationAmount"]["amount"] * convert_result
+                amount_rub = i["operationAmount"]["amount"]
+                return amount_rub
+
+
 
 
 print(get_sum_amount())
