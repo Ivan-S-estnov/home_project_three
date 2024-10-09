@@ -21,5 +21,3 @@ def test_get_mask_card_number(card_info: str, card_mask: str) -> str:
 )
 def test_get_mask_account(account_info: str, account_mask: str) -> str:
     assert get_mask_account(account_info) == account_mask
-
-
