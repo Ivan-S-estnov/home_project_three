@@ -82,6 +82,11 @@ def path_name():
     return "test"
 
 
-@pytest.fixture
-def pawn_path():
-    return 527667.26
+@pytest.fixture()
+def transaction():
+    return {
+                "id": 939719570,
+                "state": "EXECUTED",
+                "date": "2018-06-30T02:08:58.425572",
+                "operationAmount": {"amount": "100", "currency": {"name": "USD", "code": "USD"}},
+            }

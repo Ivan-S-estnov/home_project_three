@@ -29,7 +29,8 @@ def valuta_conversion(payment: Any):
     elif valuta_code != "RUB":
         response = requests.get(f"https://currate.ru/api/?get=rates&pairs={valuta_code}RUB&key={API_KEY}")
         result = response.json()
-        return round(float(amount_check) * float(result["data"]["USDRUB"]),2)
+        transaction_result = result["data"]["USDRUB"]
+        return round(float(amount_check) * float(transaction_result),2)
 
 
 convert_result = valuta_conversion(
