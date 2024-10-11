@@ -1,12 +1,11 @@
 import logging
-from venv import logger
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    filename='masks.log',
-                    filemode='w')
-masks_logger = logging.getLogger('app.masks')
-
+masks_logger = logging.getLogger("masks")
+masks_logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler("../logs/masks.log", mode="w", encoding="utf-8")
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+file_handler.setFormatter(file_formatter)
+masks_logger.addHandler(file_handler)
 
 
 def get_mask_card_number(card_numb: str) -> str:
