@@ -1,3 +1,4 @@
+import pandas as pd
 import pytest
 
 
@@ -100,3 +101,8 @@ def transaction_two():
         "date": "2019-08-26T10:50:58.294041",
         "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
     }
+
+
+@pytest.fixture
+def csv_for_test():
+    return "test.csv"
