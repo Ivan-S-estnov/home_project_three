@@ -33,14 +33,14 @@ def valuta_conversion(payment: Any):
         return round(float(amount_check) * float(transaction_result),2)
 
 
-convert_result = valuta_conversion(
-    {
-        "id": 41428829,
-        "state": "EXECUTED",
-        "date": "2019-07-03T18:35:29.512364",
-        "operationAmount": {"amount": "8221.37", "currency": {"name": "USD", "code": "USD"}},
-    }
-)
-
-
-print(convert_result)
+# convert_result = valuta_conversion(
+#     {
+#         "id": 41428829,
+#         "state": "EXECUTED",
+#         "date": "2019-07-03T18:35:29.512364",
+#         "operationAmount": {"amount": "8221.37", "currency": {"name": "USD", "code": "USD"}},
+#     }
+# )
+#
+#
+# print(convert_result)

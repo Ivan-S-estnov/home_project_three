@@ -1,3 +1,4 @@
+import pandas as pd
 import pytest
 
 
@@ -83,10 +84,25 @@ def path_name():
 
 
 @pytest.fixture()
-def transaction():
+def transaction_one():
     return {
-                "id": 939719570,
-                "state": "EXECUTED",
-                "date": "2018-06-30T02:08:58.425572",
-                "operationAmount": {"amount": "100", "currency": {"name": "USD", "code": "USD"}},
-            }
+        "id": 939719570,
+        "state": "EXECUTED",
+        "date": "2018-06-30T02:08:58.425572",
+        "operationAmount": {"amount": "100", "currency": {"name": "USD", "code": "USD"}},
+    }
+
+
+@pytest.fixture()
+def transaction_two():
+    return {
+        "id": 441945886,
+        "state": "EXECUTED",
+        "date": "2019-08-26T10:50:58.294041",
+        "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+    }
+
+
+@pytest.fixture
+def csv_for_test():
+    return "test.csv"
