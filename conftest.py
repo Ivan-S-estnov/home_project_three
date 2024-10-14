@@ -1,6 +1,7 @@
 import pytest
 
 
+
 @pytest.fixture
 def widget_input():
     return """Maestro 1596837868705199
@@ -100,3 +101,36 @@ def transaction_two():
         "date": "2019-08-26T10:50:58.294041",
         "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
     }
+
+
+@pytest.fixture
+def csv_path():
+    return [
+        {
+            "id": "650703",
+            "state": "EXECUTED",
+            "date": "2023-09-05T11:30:32Z",
+            "amount": "16210",
+            "currency_name": "SoL",
+            "currency_code": "PEN",
+            "from": "Счет 58803664651298323391",
+            "to": "Счет 39746506635466619397",
+            "description": "Перевод организации",
+        }
+    ]
+
+
+@pytest.fixture
+def excel_path():
+    return [
+        {
+            "id": "3598919.0",
+            "date": "2020-12-06T23:00:58Z",
+            "amount": "29740.0",
+            "currency_name": "Peso",
+            "currency_code": "COP",
+            "from": "Discover 3172601889670065",
+            "to": "Discover 0720428384694643",
+            "description": "Перевод с карты на карту",
+        }
+    ]
