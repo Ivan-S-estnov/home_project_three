@@ -1,43 +1,51 @@
-import os
 import re
 from collections import Counter
-
-from src.utils import get_json_file
-
-list_transactions = get_json_file(os.path.join("../data/operations.json"))
+from typing import List
 
 
-def return_list_dicts_with_transaction(list_dict: list, search_str: str) -> list:
-    """
-    Функция, которая принимает список словарей с данными о банковских операциях и строку поиска,
-    а возвращает список словарей, у которых в описании есть данная строка.
-    """
-    check_list = []
-    for transaction in list_dict:
-        if "description" in transaction and re.findall(search_str, transaction["description"]):
-            check_list.append(transaction)
-    return check_list
+def filter_by_state(operation_list: list[dict], state: str) -> list[dict]:
+    """Функция сортирует список по статусу ('state')"""
+
+    operations: list = [operation for operation in operation_list if operation.get("state") == state.upper()]
+    return operations
 
 
-def sort_transactions(list_dict_select: list, categories: list) -> dict:
-    """
-    Функция, которая принимает список словарей с данными о банковских операциях и список категорий операций,
-    а возвращает словарь, в котором ключи — это названия категорий,
-    а значения — это количество операций в каждой категории
-    """
-    list_categories_transaction = []
-    for transaction in list_dict_select:
-        if "description" in transaction and transaction["description"] in categories:
-            list_categories_transaction.append(transaction["description"])
-    sort_transaction = Counter(list_categories_transaction)
-    return dict(sort_transaction)
+def sort_by_date(operation_list: list[dict], sort_flag: bool = True) -> list[dict]:
+    """Функция сортирует список по дате"""
+
+    date_list: List[str] = [operation.get("date") for operation in operation_list]
+    for operation_date in date_list:
+        new_date: list = operation_date[:10].split("-")
+        if not "".join(new_date).isdigit() or len(new_date) != 3:
+            print("Некорректный формат даты: ", new_date)
+            return []
+        elif 1900 > int(new_date[0]) or int(new_date[0]) > 2024 or int(new_date[1]) > 12 or int(new_date[2]) > 31:
+            print("Некорректный формат даты: ", new_date)
+            return []
+
+    return sorted(operation_list, key=lambda date: date["date"], reverse=sort_flag)
 
 
-if __name__ == "__main__":
-    categories_operations = [
-        "Перевод организации",
-        "Перевод с карты на карту",
-        "Перевод с карты на счет",
-        "Перевод со счета на счет",
-        "Открытие вклада",
-    ]
+def filter_by_request(transaction_list: list[dict], user_request: str) -> list[dict]:
+    """Функция сортирует список по характеристике ('description')"""
+
+    target_list = []
+    lower_user_request = user_request.lower()
+    for transaction in transaction_list:
+        if re.search(lower_user_request, transaction.get("description", ""), flags=re.IGNORECASE):
+            target_list.append(transaction)
+        else:
+            continue
+    print(target_list)
+    return target_list
+
+
+def count_transaction_categories(transactions: list[dict]) -> dict:
+    """Функция формирует итоговый список транзакций"""
+
+    categories = []
+    for transaction in transactions:
+        categories.append(transaction["description"])
+    counted = dict(Counter(categories))
+    print(counted)
+    return counted
